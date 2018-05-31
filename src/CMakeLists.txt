@@ -26,8 +26,3 @@ add_executable(create_wand_data create_wand_data.cpp)
 target_link_libraries(create_wand_data
   ${Boost_LIBRARIES}
   )
-
-add_executable(unary_enumerator_perftest unary_enumerator_perftest.cpp)
-target_link_libraries(unary_enumerator_perftest
-  ${Boost_LIBRARIES}
-  )

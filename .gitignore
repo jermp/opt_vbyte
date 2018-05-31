@@ -2,17 +2,6 @@
 
 build/
 data/
-ds2i_config.hpp
-
-# Python junk
-*.pyc
-
-# Java junk
-.classpath
-.project
-*.jar
-.settings
-target/
 
 # CMake junk
 CMakeCache.txt
