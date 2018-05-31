@@ -15,7 +15,6 @@ typedef std::chrono::high_resolution_clock clock_type;
 template<typename IndexType>
 void perftest(IndexType& index, std::string const& type)
 {
-    std::string freqs_log = with_freqs ? "+freq()" : "";
     {
         size_t min_length =  500000;
         size_t max_length = 5000000;
@@ -50,13 +49,13 @@ void perftest(IndexType& index, std::string const& type)
         std::chrono::duration<double> elapsed = end - start;
 
         double next_ns = elapsed.count() / postings * 1000000000;
-        logger() << "Performed " << postings << " next()" << freqs_log
+        logger() << "Performed " << postings << " next()"
                  << " in " << elapsed.count() << " [sec], "
                  << std::fixed << std::setprecision(2)
                  << next_ns << " [ns] x posting"
                  << std::endl;
 
-        std::cout << type << "\t" << "next" << (with_freqs ? "_freq" : "")
+        std::cout << type << "\t" << "next"
                   << "\t" << next_ns << std::endl;
     }
 }

@@ -151,7 +151,6 @@ namespace ds2i {
             // semicolons are redundant but they are needed to get emacs to
             // align the lines properly
             ENUMERATOR_METHOD(value_type, move, (uint64_t position), (position));
-            ENUMERATOR_METHOD(value_type, access_delta, (uint64_t position), (position));
             ENUMERATOR_METHOD(value_type, next_geq, (uint64_t lower_bound), (lower_bound));
             ENUMERATOR_METHOD(value_type, next, (), ());
             ENUMERATOR_METHOD(uint64_t, size, () const, ());

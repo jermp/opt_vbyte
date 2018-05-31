@@ -157,64 +157,64 @@ namespace ds2i {
             // std::cout << "bit x doc " << cost_opt * 1.0 / size << std::endl;
         }
 
-        // exact quadratic solution
-        template<typename ForwardIterator, typename CostFunction>
-        exact_optimal_partition(ForwardIterator begin,
-                                posting_type base, posting_type universe, uint64_t size,
-                                CostFunction cost_fun, double eps1, double eps2,
-                                global_parameters const& params, uint64_t fix_cost)
-        {
-            (void) eps1;
-            (void) eps2; // solution is exact
-            cost_t single_block_cost = cost_fun(begin, universe - base, size);
-            std::vector<cost_t> min_cost(size + 1, single_block_cost);
-            min_cost[0] = 0;
+        // exact quadratic solution for debugging on small files
+        // template<typename ForwardIterator, typename CostFunction>
+        // optimal_partition(ForwardIterator begin,
+        //                   posting_type base, posting_type universe, uint64_t size,
+        //                   CostFunction cost_fun, double eps1, double eps2,
+        //                   global_parameters const& params, uint64_t fix_cost)
+        // {
+        //     (void) eps1;
+        //     (void) eps2; // solution is exact
+        //     cost_t single_block_cost = cost_fun(begin, universe - base, size);
+        //     std::vector<cost_t> min_cost(size + 1, single_block_cost);
+        //     min_cost[0] = 0;
 
-            std::vector<cost_window<ForwardIterator>> windows;
-            windows.reserve(size + 1);
-            for (uint64_t i = 0; i < size + 1; ++i) {
-                windows.emplace_back(begin, base, 0, params);
-            }
+        //     std::vector<cost_window<ForwardIterator>> windows;
+        //     windows.reserve(size + 1);
+        //     for (uint64_t i = 0; i < size + 1; ++i) {
+        //         windows.emplace_back(begin, base, 0, params);
+        //     }
 
-            std::vector<posting_type> path(size + 1, 0);
-            for (uint64_t i = 0; i < size; ++i) {
-                for (uint64_t j = i + 1; j < size + 1; ++j) {
-                    auto& window = windows[j];
-                    assert(window.start == i);
+        //     std::vector<posting_type> path(size + 1, 0);
+        //     for (uint64_t i = 0; i < size; ++i) {
+        //         for (uint64_t j = i + 1; j < size + 1; ++j) {
+        //             auto& window = windows[j];
+        //             assert(window.start == i);
 
-                    while (window.end < j) {
-                        window.advance_end();
-                    }
-                    assert(window.end == j); // one-past the end
-                    cost_t window_cost = window.cost() + fix_cost;
-                    if (min_cost[i] + window_cost < min_cost[j]) {
-                        min_cost[j] = min_cost[i] + window_cost;
-                        path[j] = i;
-                    }
+        //             while (window.end < j) {
+        //                 window.advance_end();
+        //             }
+        //             assert(window.end == j); // one-past the end
+        //             cost_t window_cost = window.cost() + fix_cost;
+        //             if (min_cost[i] + window_cost < min_cost[j]) {
+        //                 min_cost[j] = min_cost[i] + window_cost;
+        //                 path[j] = i;
+        //             }
 
-                    window.advance_start();
-                }
-            }
+        //             window.advance_start();
+        //         }
+        //     }
 
-            posting_type curr_pos = size;
-            while (curr_pos != 0) {
-                partition.push_back(curr_pos);
-                curr_pos = path[curr_pos];
-            }
-            std::reverse(partition.begin(), partition.end());
-            cost_opt = min_cost[size];
+        //     posting_type curr_pos = size;
+        //     while (curr_pos != 0) {
+        //         partition.push_back(curr_pos);
+        //         curr_pos = path[curr_pos];
+        //     }
+        //     std::reverse(partition.begin(), partition.end());
+        //     cost_opt = min_cost[size];
 
-            // std::cout << "num. partitions " << partition.size() << std::endl;
-            // std::cout << "sizes:cost\n";
-            // for (auto s: partition) {
-            //     // std::cout << s << ":" << min_cost[s] << std::endl;
-            //     std::cout << min_cost[s] << std::endl;
-            // }
-            // if (partition.size() == 1) {
-            //     cost_opt -= fix_cost;
-            // }
-            // std::cout << "opt_cost " << cost_opt << std::endl;
-            // std::cout << "bit x doc " << cost_opt * 1.0 / size << std::endl;
-        }
+        //     // std::cout << "num. partitions " << partition.size() << std::endl;
+        //     // std::cout << "sizes:cost\n";
+        //     // for (auto s: partition) {
+        //     //     // std::cout << s << ":" << min_cost[s] << std::endl;
+        //     //     std::cout << min_cost[s] << std::endl;
+        //     // }
+        //     // if (partition.size() == 1) {
+        //     //     cost_opt -= fix_cost;
+        //     // }
+        //     // std::cout << "opt_cost " << cost_opt << std::endl;
+        //     // std::cout << "bit x doc " << cost_opt * 1.0 / size << std::endl;
+        // }
     };
 }

@@ -69,8 +69,7 @@ void create_collection(InputCollection const& input,
         logger() << "done in " << elapsed_secs << " seconds" << std::endl;
 
         if (check) {
-            verify_collection<InputCollection, CollectionType>(input, output_filename,
-                                                               false, 10000, 7000000);
+            verify_collection<InputCollection, CollectionType>(input, output_filename);
         }
     }
 }

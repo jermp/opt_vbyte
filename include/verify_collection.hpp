@@ -9,8 +9,7 @@ namespace ds2i {
 
     template<typename InputCollection, typename Collection>
     void verify_collection(InputCollection const& input,
-                           const char* filename,
-                           bool print_statistics)
+                           const char* filename)
     {
         Collection coll;
         boost::iostreams::mapped_file_source m(filename);

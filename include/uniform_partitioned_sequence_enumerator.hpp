@@ -89,19 +89,6 @@ namespace ds2i {
             return slow_move();
         }
 
-        pv_type DS2I_ALWAYSINLINE access_delta(uint64_t position) {
-
-            assert(position <= size());
-            m_position = position;
-
-            if (m_position >= m_cur_begin and m_position < m_cur_end) {
-                m_value = m_cur_base + m_partition_enumerator.access_delta(m_position - m_cur_begin).second;
-                return value();
-            }
-
-            return slow_access_delta();
-        }
-
         pv_type DS2I_ALWAYSINLINE next_geq(uint64_t lower_bound) {
             if (DS2I_LIKELY(lower_bound >= m_cur_base and lower_bound <= m_cur_upper_bound)) {
                 auto val = m_partition_enumerator.next_geq(lower_bound - m_cur_base);
