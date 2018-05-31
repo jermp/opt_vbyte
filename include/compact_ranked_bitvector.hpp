@@ -8,9 +8,6 @@
 #include "util.hpp"
 #include "typedefs.hpp"
 
-#include <x86intrin.h>
-#include "../src/bitmap_tables.h"
-
 namespace ds2i {
 
     struct compact_ranked_bitvector {
