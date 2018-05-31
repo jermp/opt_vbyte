@@ -1,0 +1,15 @@
+[submodule "external/FastPFor"]
+	path = external/FastPFor
+	url = https://github.com/lemire/FastPFor.git
+[submodule "external/stxxl"]
+	path = external/stxxl
+	url = https://github.com/stxxl/stxxl.git
+[submodule "external/succinct"]
+	path = external/succinct
+	url = https://github.com/ot/succinct.git
+[submodule "external/streamvbyte"]
+	path = external/streamvbyte
+	url = https://github.com/lemire/streamvbyte.git
+[submodule "external/MaskedVByte"]
+	path = external/MaskedVByte
+	url = https://github.com/lemire/MaskedVByte.git
