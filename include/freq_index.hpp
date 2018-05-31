@@ -10,17 +10,14 @@
 namespace ds2i {
 
     template<typename DocsSequence, typename FreqsSequence>
-    class freq_index {
-    public:
+    struct freq_index {
         freq_index()
             : m_params()
             , m_num_docs(0)
         {}
 
-        class builder {
-        public:
-            builder(uint64_t num_docs, global_parameters const& params,
-                    configuration const& conf)
+        struct builder {
+            builder(uint64_t num_docs, global_parameters const& params)
                 : m_params(params)
                 , m_num_docs(num_docs)
                 , m_docs_sequences(params)
@@ -69,7 +66,6 @@ namespace ds2i {
             }
 
         private:
-
             global_parameters m_params;
             uint64_t m_num_docs;
             bitvector_collection::builder m_docs_sequences;

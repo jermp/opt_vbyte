@@ -36,7 +36,7 @@ void create_collection(InputCollection const& input,
     double tick = get_time_usecs();
     double user_tick = get_user_time_usecs();
 
-    typename CollectionType::builder builder(input.num_docs(), params, conf);
+    typename CollectionType::builder builder(input.num_docs(), params);
     progress_logger plog;
     uint64_t size = 0;
 

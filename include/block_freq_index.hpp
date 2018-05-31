@@ -18,8 +18,7 @@ namespace ds2i {
 
         class builder {
         public:
-            builder(uint64_t num_docs, global_parameters const& params,
-                    configuration const& /*conf*/)
+            builder(uint64_t num_docs, global_parameters const& params)
                 : m_params(params)
             {
                 m_num_docs = num_docs;

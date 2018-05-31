@@ -47,13 +47,11 @@ namespace ds2i {
             }
         }
 
-        class enumerator {
-        public:
-
-            typedef std::pair<uint64_t, uint64_t> value_type; // (position, value)
-
+        struct enumerator {
             enumerator()
             {}
+
+            typedef std::pair<uint64_t, uint64_t> value_type; // (position, value)
 
             enumerator(succinct::bit_vector const& bv,
                        uint64_t offset,
@@ -61,8 +59,8 @@ namespace ds2i {
                        global_parameters const& params)
                 : m_n(n)
                 , m_universe(universe)
-                , m_value(0)
                 , m_pos_in_block(0)
+                , m_value(0)
                 , m_cur_block(0)
                 , m_blocks(succinct::util::ceil_div(n, BlockCodec::block_size))
             {
