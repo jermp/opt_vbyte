@@ -48,7 +48,7 @@ The collection containing the docID and frequency lists follow the format of [`d
   previous file (note however that this file does not have an additional
   singleton list at its beginning).
 
-The `data' subfolder contains an example of such collection organization, for a total of 113,306 sequences and 3,327,520 postings. The `queries' file is, instead, a collection of 500 (multi-term) queries.
+The `data` subfolder contains an example of such collection organization, for a total of 113,306 sequences and 3,327,520 postings. The `queries` file is, instead, a collection of 500 (multi-term) queries.
 
 For the following examples, we assume to work with the sample data contained in `data`.
 
