@@ -1,9 +1,9 @@
 opt_vbyte
 =========
 
-This is the code used for the experiments in the paper [*Variable-Byte Encoding is Now Space-Efficient Too*](http://pages.di.unipi.it/pibiri/papers/VByte18.pdf)[1], by Giulio Ermanno Pibiri and Rossano Venturini.
+This is the code used for the experiments in the paper [*Variable-Byte Encoding is Now Space-Efficient Too*](http://pages.di.unipi.it/pibiri/papers/VByte18.pdf) [1], by Giulio Ermanno Pibiri and Rossano Venturini.
 
-This guide is meant to provide a brief overview of the library and to illustrate its funtionalities through some examples.
+This guide is meant to provide a brief overview of the library and to illustrate its functionalities through some examples.
 ##### Table of contents
 * [Building the code](#building-the-code)
 * [Input data format](#input-data-format)
@@ -14,7 +14,7 @@ This guide is meant to provide a brief overview of the library and to illustrate
 Building the code
 -----------------
 
-The code is tested on Linux Ubuntu with `gcc` 5.4.1. The following dependencies are needed for the build: `CMake` >= 2.8 and `Boost` >= 1.58.
+The code is tested on Linux Ubuntu with `gcc` 7.3.0. The following dependencies are needed for the build: `CMake` >= 2.8 and `Boost` >= 1.42.0.
 
 The code is largely based on the [`ds2i`](https://github.com/ot/ds2i) project, so it depends on several submodules. If you have cloned the repository without `--recursive`, you will need to perform the following commands before
 building:
@@ -48,51 +48,53 @@ The collection containing the docID and frequency lists follow the format of [`d
   previous file (note however that this file does not have an additional
   singleton list at its beginning).
 
-** Describe the content of the subfolder `data' **
+The `data' subfolder contains an example of such collection organization, for a total of 113,306 sequences and 3,327,520 postings. The `queries' file is, instead, a collection of 500 (multi-term) queries.
 
 For the following examples, we assume to work with the sample data contained in `data`.
 
 Building the indexes
 --------------------
 
-<!-- The executables `create_clustered_freq_index_fb` (frequency-based) and `create_clustered_freq_index_sb` (space-based) can be used to build clustered Elias-Fano indexes, given an input collection and a set of clusters.
-For the other parameters of the executables, see the corresponding `.cpp` files. Below we show some examples.
+The executables `src/create_freq_index` should be used to build the indexes, given an input collection. To know the parameters needed by the executable, just type
+
+    $ ./create_freq_index
+
+without any parameters. You will get:
+
+    $ Usage ./create_freq_index:
+    $       <index_type> <collection_basename> [--out <output_filename>] [--F <fix_cost>] [--check]
+
+Below we show some examples.
 
 ##### Example 1.
 The command
 
-    $ ./create_clustered_freq_index_fb ../test_data/test_collection.bin \
-    ../test_data/test_collection.clusters.gz 800000 clustered_opt_index.800K.bin
+    $ ./create_freq_index opt_vb ../data/test_collection --out test.opt_vb.bin
 
-builds a clustered Elias-Fano index:
-* using the frequency-based approach;
-* whose reference list size is 800,000;
-* that is serialized to the binary file `clustered_opt_index.800K.bin`.
+builds an optimally-partitioned VByte index that is serialized to the binary file `test.opt_vb.bin`.
 
 ##### Example 2.
 The command
 
-    $ ./create_freq_index opt ../test_data/test_collection.bin \
-    --clusters ../test_data/test_collection.clusters.gz opt_index.bin
+    $ ./create_freq_index block_maskedvbyte ../data/test_collection --out test.vb.bin
 
-builds a partitioned Elias-Fano index on the same postings lists used by the corresponding clustered index (see Example 1.), as specified with the option `--clusters` and serialized to the binary file `opt_index.bin`.
+builds an un-partitioned VByte index that is serialized to the binary file `test.vb.bin`, using [`Masked-VByte`](https://github.com/lemire/MaskedVByte.git) to perform sequential decoding.
 
 ##### Example 3.
 The command
 
-    $ ./create_freq_index block_interpolative ../test_data/test_collection.bin \
-    --clusters ../test_data/test_collection.clusters.gz bic_index.bin
+    $ ./queries opt_vb and test.opt_vb.bin ../data/queries
 
-builds a Binary Interpolative index on the same postings lists used by the corresponding clustered index (see Example 1.), as specified with the option `--clusters` and serialized to the binary file `bic_index.bin`.
+performed the boolean AND queries contained in the data file `queries' over the index serialized to `test.opt_vb.bin'.
 
+A comparison between the space of un-partitioned VByte and partitioned VByte indexes (uniform, eps-optimal and optimal) is shown below. Results have been collected on a machine with an i7-4790K processor clocked at 4GHz and running Linux 4.13.0 (Ubuntu 17.10), 64 bits. The code was compiled using the highest optimization setting.
 
-A comparison between the space of such indexes is summarized by the following table, where CPEF indicates the clustered Elias-Fano index, PEF the partitioned Elias-Fano index and BIC the Binary Interpolative one.
-
-|     **Index**     |**bits x posting** |
-|-------------------|-------------------|
-|CPEF               |4.23               |
-|PEF                |5.15 (**+17.86%**) |
-|BIC                |4.60 (**+8.04%**)  | -->
+|     **Index**     |  **docs bpi**  |  **freqs bpi**  |**building time [secs]**| **µsec/query** |
+|-------------------|----------------|-----------------|------------------------|----------------|
+|VByte              |10.498          | 8.031           |    0.704               |   4.316        |
+|VByte uniform      | 8.118          | 4.686           |    0.769               |   4.339        |
+|VByte eps-optimal  | 7.438          | 4.302           |    3.419               |   4.434        |
+|VByte optimal      | 7.388          | 4.268           |    0.739               |   4.378        |
 
 Authors
 -------
