@@ -1,7 +1,6 @@
 **/.DS_Store
 
 build/
-data/
 
 # CMake junk
 CMakeCache.txt
