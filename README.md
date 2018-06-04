@@ -8,6 +8,7 @@ This guide is meant to provide a brief overview of the library and to illustrate
 * [Building the code](#building-the-code)
 * [Input data format](#input-data-format)
 * [Building the indexes](#building-the-indexes)
+* [Benchmark](#benchmark)
 * [Authors](#authors)
 * [Bibliography](#bibliography)
 
@@ -87,10 +88,13 @@ The command
 
 performed the boolean AND queries contained in the data file `queries' over the index serialized to `test.opt_vb.bin'.
 
+Benchmark
+---------
+
 A comparison between the space of un-partitioned VByte and partitioned VByte indexes (uniform, eps-optimal and optimal) is shown below. Results have been collected on a machine with an i7-4790K processor clocked at 4GHz and running Linux 4.13.0 (Ubuntu 17.10), 64 bits. The code was compiled using the highest optimization setting.
 
 |     **Index**     |  **docs bpi**  |  **freqs bpi**  |**building time [secs]**| **µsec/query** |
-|-------------------|----------------|-----------------|------------------------|----------------|
+|-------------------|---------------:|----------------:|-----------------------:|---------------:|
 |VByte              |10.498          | 8.031           |    0.704               |   4.316        |
 |VByte uniform      | 8.118          | 4.686           |    0.769               |   4.339        |
 |VByte eps-optimal  | 7.438          | 4.302           |    3.419               |   4.434        |
