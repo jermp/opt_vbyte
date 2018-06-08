@@ -8,7 +8,7 @@
 
 #include "util.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct binary_blocks_collection {
 

@@ -3,9 +3,9 @@
 #include "succinct/mapper.hpp"
 #include "util.hpp"
 
-using ds2i::logger;
+using pvb::logger;
 
-namespace ds2i {
+namespace pvb {
 
     template<typename InputCollection, typename Collection>
     void verify_collection(InputCollection const& input,
@@ -54,11 +54,10 @@ namespace ds2i {
                 }
             }
 
-            if (seq_id and seq_id % 1000000 == 0) {
+            ++seq_id;
+            if (seq_id % 1000000 == 0) {
                 logger() << seq_id << " list checked" << std::endl;
             }
-
-            ++seq_id;
         }
 
         logger() << seq_id << " list checked" << std::endl;

@@ -18,7 +18,7 @@ static const std::vector<uint64_t>
                    //, 2048, 4096, 8192
                  };
 
-using namespace ds2i;
+using namespace pvb;
 typedef std::vector<uint64_t> uncompressed_sequence_type;
 
 uncompressed_sequence_type

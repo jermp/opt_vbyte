@@ -7,7 +7,7 @@
 #include "configuration.hpp"
 #include "queues.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename DocsSequence, typename FreqsSequence>
     struct freq_index {
@@ -134,7 +134,7 @@ namespace ds2i {
             }
 
         private:
-            friend class freq_index;
+            friend struct freq_index;
 
             document_enumerator(typename DocsSequence::enumerator docs_enum,
                                 typename FreqsSequence::enumerator freqs_enum)

@@ -17,7 +17,7 @@
 #include "util.hpp"
 #include "typedefs.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     // workaround: VariableByte::decodeArray needs the buffer size, while we
     // only know the number of values. It also pads to 32 bits. We need to

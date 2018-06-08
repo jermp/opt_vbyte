@@ -2,7 +2,7 @@
 
 #include "typedefs.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct uncompressed_upper_bounds {
         uncompressed_upper_bounds()

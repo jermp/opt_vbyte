@@ -20,7 +20,7 @@
 #include "uncompressed_upper_bounds.hpp"
 #include "compact_ranked_bitvector.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     /* Partitioned VByte indexes */
 

@@ -6,7 +6,7 @@
 
 #include "binary_collection.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     class binary_freq_collection {
     public:

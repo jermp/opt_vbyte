@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ds2i {
+namespace pvb {
 
     struct global_parameters {
         global_parameters()

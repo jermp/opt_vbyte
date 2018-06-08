@@ -4,7 +4,7 @@
 #include <atomic>
 #include <mutex>
 
-namespace ds2i {
+namespace pvb {
 
     class block_profiler {
     public:

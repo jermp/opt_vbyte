@@ -10,11 +10,11 @@
 #include "queries.hpp"
 #include "util.hpp"
 
-using namespace ds2i;
+using namespace pvb;
 
 template<typename Functor>
 void op_perftest(Functor query_func,
-                 std::vector<ds2i::term_id_vec> const& queries,
+                 std::vector<term_id_vec> const& queries,
                  std::string const& index_type,
                  std::string const& query_type,
                  size_t runs)
@@ -54,7 +54,7 @@ void op_perftest(Functor query_func,
 template<typename IndexType>
 void perftest(const char* index_filename,
               const char* wand_data_filename,
-              std::vector<ds2i::term_id_vec> const& queries,
+              std::vector<term_id_vec> const& queries,
               std::string const& index_type,
               std::string const& query_type,
               uint64_t k)
@@ -85,16 +85,16 @@ void perftest(const char* index_filename,
 
     logger() << "Performing " << query_type << " queries" << std::endl;
 
-    std::function<uint64_t(ds2i::term_id_vec)> query_fun;
+    std::function<uint64_t(term_id_vec)> query_fun;
 
     if (query_type == "and") {
-        query_fun = [&](ds2i::term_id_vec query) {
+        query_fun = [&](term_id_vec query) {
             return and_query()(index, query);
         };
     } else if (query_type == "ranked_and") {
         if (wand_data_filename) {
             logger() << "top-" << k << " results" << std::endl;
-            query_fun = [&](ds2i::term_id_vec query) {
+            query_fun = [&](term_id_vec query) {
                 return ranked_and_query(wdata, k)(index, query);
             };
         } else {
@@ -110,12 +110,11 @@ void perftest(const char* index_filename,
 }
 
 int main(int argc, const char** argv) {
-    using namespace ds2i;
 
     if (argc < 3) {
         std::cerr << "Usage: " << argv[0] << ":\n"
-                  << "\t <index_type> <query_algorithm> <index_filename> <query_filename> "
-                  << "[--profile] [--k K] [--wand wand_filename]"
+                  << "\t <index_type> <query_algorithm> <index_filename> <query_filename>"
+                  << " [--wand wand_filename]"
                   << std::endl;
         return 1;
     }

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-namespace ds2i {
+namespace pvb {
 
     template <bool delta = false>
     class VarIntGB {

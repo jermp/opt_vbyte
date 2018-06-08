@@ -3,7 +3,7 @@
 #include "global_parameters.hpp"
 #include "util.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct all_ones_sequence {
 

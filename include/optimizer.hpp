@@ -2,7 +2,7 @@
 
 #include "configuration.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename Encoder>
     struct optimizer {

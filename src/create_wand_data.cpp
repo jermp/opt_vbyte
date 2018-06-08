@@ -9,7 +9,7 @@
 
 int main(int argc, const char** argv) {
 
-    using namespace ds2i;
+    using namespace pvb;
 
     if (argc != 3) {
         std::cerr << "Usage " << argv[0] << ":\n\t"

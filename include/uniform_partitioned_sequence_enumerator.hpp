@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ds2i {
+namespace pvb {
 
     template<typename Encoder, typename UpperBounds>
     struct uniform_partitioned_sequence_enumerator {

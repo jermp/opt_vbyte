@@ -5,7 +5,7 @@
 #include "strict_sequence.hpp"
 #include "util.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template <typename BaseSequence = strict_sequence>
     struct positive_sequence {

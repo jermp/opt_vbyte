@@ -9,7 +9,7 @@
 #include "all_ones_sequence.hpp"
 #include "global_parameters.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename T>
     struct is_byte_aligned {

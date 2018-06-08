@@ -8,7 +8,7 @@
 #include "util.hpp"
 #include "typedefs.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct compact_ranked_bitvector {
 

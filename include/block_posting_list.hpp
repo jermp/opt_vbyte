@@ -5,7 +5,7 @@
 #include "util.hpp"
 #include "block_profiler.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template <typename BlockCodec, bool Profile=false>
     struct block_posting_list {

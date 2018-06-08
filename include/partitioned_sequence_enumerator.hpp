@@ -7,7 +7,7 @@
 #include "util.hpp"
 #include "typedefs.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename Encoder>
     struct partitioned_sequence_enumerator {

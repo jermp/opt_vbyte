@@ -6,7 +6,7 @@
 #include "global_parameters.hpp"
 #include "semiasync_queue.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template <typename IndexedSequence>
     class sequence_collection {

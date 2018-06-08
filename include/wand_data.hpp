@@ -6,11 +6,10 @@
 #include "bm25.hpp"
 #include "util.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename Scorer = bm25>
-    class wand_data {
-    public:
+    struct wand_data {
         wand_data()
         {}
 
@@ -52,18 +51,15 @@ namespace ds2i {
             m_max_term_weight.steal(max_term_weight);
         }
 
-        float norm_len(uint64_t doc_id) const
-        {
+        float norm_len(uint64_t doc_id) const {
             return m_norm_lens[doc_id];
         }
 
-        float max_term_weight(uint64_t term_id) const
-        {
+        float max_term_weight(uint64_t term_id) const {
             return m_max_term_weight[term_id];
         }
 
-        void swap(wand_data& other)
-        {
+        void swap(wand_data& other) {
             m_norm_lens.swap(other.m_norm_lens);
             m_max_term_weight.swap(other.m_max_term_weight);
         }
@@ -81,5 +77,4 @@ namespace ds2i {
         succinct::mapper::mappable_vector<float> m_norm_lens;
         succinct::mapper::mappable_vector<float> m_max_term_weight;
     };
-
 }

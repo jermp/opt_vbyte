@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ds2i {
+namespace pvb {
 
     // note: n can be 0
     void write_gamma(succinct::bit_vector_builder& bvb, uint64_t n)

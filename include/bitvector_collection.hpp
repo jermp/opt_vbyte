@@ -4,7 +4,7 @@
 
 #include "compact_elias_fano.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     class bitvector_collection {
     public:

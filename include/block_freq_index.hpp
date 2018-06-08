@@ -7,7 +7,7 @@
 #include "compact_elias_fano.hpp"
 #include "block_posting_list.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template <typename BlockCodec, bool Profile=false>
     class block_freq_index {

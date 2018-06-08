@@ -8,7 +8,7 @@
 #include "typedefs.hpp"
 #include "indexed_sequence.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     typedef uint64_t cost_t;
 

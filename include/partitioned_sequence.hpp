@@ -5,7 +5,7 @@
 #include "optimal_partition.hpp"
 #include "partitioned_sequence_enumerator.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename Encoder>
     struct partitioned_sequence {

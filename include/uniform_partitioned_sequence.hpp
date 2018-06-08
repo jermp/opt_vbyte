@@ -9,7 +9,7 @@
 #include "util.hpp"
 #include "uniform_partitioned_sequence_enumerator.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename Encoder, typename UpperBounds>
     struct uniform_partitioned_sequence {

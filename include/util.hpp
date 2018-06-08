@@ -29,7 +29,7 @@
 #    define DS2I_FLATTEN_FUNC DS2I_ALWAYSINLINE
 #endif
 
-namespace ds2i {
+namespace pvb {
 
     typedef std::chrono::high_resolution_clock clock_type;
 

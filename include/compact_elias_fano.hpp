@@ -9,7 +9,7 @@
 #include "typedefs.hpp"
 #include "util.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct compact_elias_fano {
 

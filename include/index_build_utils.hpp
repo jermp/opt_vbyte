@@ -4,7 +4,7 @@
 #include "util.hpp"
 #include "succinct/mapper.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct progress_logger {
         progress_logger()

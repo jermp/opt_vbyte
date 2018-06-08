@@ -12,7 +12,7 @@
 #include <limits>
 #include <cmath>
 
-namespace ds2i {
+namespace pvb {
 
     template<typename VByteBlockType>
     struct partitioned_vb_sequence {

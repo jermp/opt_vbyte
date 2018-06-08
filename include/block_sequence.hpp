@@ -5,7 +5,7 @@
 #include "typedefs.hpp"
 #include "block_codecs.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     template<typename BlockCodec>
     struct block_sequence {

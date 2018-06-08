@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace ds2i {
+namespace pvb {
 
     struct bm25 {
         static constexpr float b = 0.5;

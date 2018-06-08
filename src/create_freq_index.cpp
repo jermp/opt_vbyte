@@ -16,21 +16,21 @@
 #include "util.hpp"
 #include "verify_collection.hpp"
 
-using ds2i::logger;
+using namespace pvb;
+using pvb::logger;
 
 template <typename Collection>
 void dump_index_specific_stats(Collection const &, std::string const &)
 {}
 
-template<typename InputCollection, typename CollectionType, typename Scorer = ds2i::bm25>
+template<typename InputCollection, typename CollectionType, typename Scorer = bm25>
 void create_collection(InputCollection const& input,
-                       ds2i::global_parameters const& params,
-                       ds2i::configuration const& conf,
+                       global_parameters const& params,
+                       configuration const& conf,
                        const char* output_filename,
                        bool check,
                        std::string const& seq_type)
 {
-    using namespace ds2i;
     logger() << "Building index with F = " << conf.fix_cost << std::endl;
     logger() << "Processing " << input.num_docs() << " documents" << std::endl;
     double tick = get_time_usecs();
@@ -83,7 +83,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    using namespace ds2i;
     std::string type = argv[1];
     const char* collection_basename = argv[2];
     const char* output_filename = nullptr;

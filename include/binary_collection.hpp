@@ -8,7 +8,7 @@
 
 #include "util.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     class binary_collection {
     public:

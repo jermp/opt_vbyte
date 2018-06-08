@@ -5,10 +5,10 @@
 
 #include <chrono>
 
-using namespace ds2i;
-using ds2i::logger;
-using ds2i::get_time_usecs;
-using ds2i::do_not_optimize_away;
+using namespace pvb;
+using pvb::logger;
+using pvb::get_time_usecs;
+using pvb::do_not_optimize_away;
 
 typedef std::chrono::high_resolution_clock clock_type;
 

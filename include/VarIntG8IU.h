@@ -10,7 +10,7 @@
 #define PREDICT_FALSE(x) x
 #endif
 #include <bitset>
-namespace ds2i {
+namespace pvb {
 
 class NotEnoughStorage : public std::runtime_error {
 public:

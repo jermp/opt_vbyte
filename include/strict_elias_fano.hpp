@@ -5,7 +5,7 @@
 #include "compact_elias_fano.hpp"
 #include "util.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct strict_elias_fano {
 

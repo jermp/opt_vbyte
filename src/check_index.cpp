@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    using namespace ds2i;
+    using namespace pvb;
     std::string index_type = argv[1];
     const char* index_filename = argv[2];
     const char* collection_filename = argv[3];

@@ -8,7 +8,7 @@
 #include "util.hpp"
 #include "wand_data.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     typedef uint32_t term_id_type;
     typedef std::vector<term_id_type> term_id_vec;

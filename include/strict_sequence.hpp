@@ -7,7 +7,7 @@
 #include "all_ones_sequence.hpp"
 #include "global_parameters.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     struct strict_sequence {
 

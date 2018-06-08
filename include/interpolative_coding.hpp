@@ -5,7 +5,7 @@
 
 #include "succinct/broadword.hpp"
 
-namespace ds2i {
+namespace pvb {
 
     class bit_writer {
     public:
