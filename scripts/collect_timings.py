@@ -11,7 +11,7 @@ index_types = ["opt_vb_dp", "uniform_vb", "opt_vb",
                "block_varintgb", "block_varintg8iu"]
 
 for type in index_types:
-        cmd = "./drop_caches; ./queries " + type + " and " + path_to_binaries + "/" + prefix_name + "." + type + ".bin " + path_to_basename + "." + query_log + " > " + path_to_results + "/" + prefix_name + "." + type + ".querytime." + query_log
+        cmd = "./drop_caches; ./queries " + type + " and " + path_to_binaries + "/" + prefix_name + "." + type + ".bin " + query_log + " >> " + path_to_results + "/" + prefix_name + "." + type + ".querytime"
         # print cmd
         for i in xrange(0, 3):
             os.system(cmd)
