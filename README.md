@@ -88,6 +88,8 @@ The command
 
 performed the boolean AND queries contained in the data file `queries` over the index serialized to `test.opt_vb.bin`.
 
+* NOTE: See also the Python scripts in the `scripts/` directory to build the indexes and collect query timings.
+
 Benchmark
 ---------
 
