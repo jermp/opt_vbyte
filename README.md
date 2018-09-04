@@ -86,7 +86,7 @@ The command
 
     $ ./queries opt_vb and test.opt_vb.bin ../data/queries
 
-performed the boolean AND queries contained in the data file `queries` over the index serialized to `test.opt_vb.bin.
+performed the boolean AND queries contained in the data file `queries` over the index serialized to `test.opt_vb.bin`.
 
 Benchmark
 ---------
