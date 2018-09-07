@@ -12,6 +12,8 @@
 
 using namespace pvb;
 
+static const uint64_t num_runs = 2;
+
 template<typename Functor>
 void op_perftest(Functor query_func,
                  std::vector<term_id_vec> const& queries,
@@ -22,7 +24,27 @@ void op_perftest(Functor query_func,
     std::vector<double> query_times;
 
     for (size_t run = 0; run <= runs; ++run) {
+        // uint64_t query_id = 0;
         for (auto const& query: queries) {
+            // std::cout << "query " << query_id << std::endl;
+            // if (query_id == 11580  or
+            //     query_id == 117163 or
+            //     query_id == 140627 or
+            //     query_id == 157135 or
+            //     query_id == 165053 or
+            //     query_id == 170455 or
+            //     query_id == 196367 or
+            //     query_id == 209553 or
+            //     query_id == 209969 or
+            //     query_id == 214237)
+            // {
+            //     for (auto x: query) {
+            //         std::cout << x << " ";
+            //     }
+            //     std::cout << std::endl;
+            //     ++query_id;
+            //     continue;
+            // }
             auto tick = get_time_usecs();
             uint64_t result = query_func(query);
             do_not_optimize_away(result);
@@ -30,8 +52,21 @@ void op_perftest(Functor query_func,
             if (run != 0) { // first run is not timed
                 query_times.push_back(elapsed);
             }
+            // ++query_id;
         }
     }
+
+    // for (size_t run = 0; run <= runs; ++run) {
+    //     for (auto const& query: queries) {
+    //         auto tick = get_time_usecs();
+    //         uint64_t result = query_func(query);
+    //         do_not_optimize_away(result);
+    //         double elapsed = double(get_time_usecs() - tick);
+    //         if (run != 0) { // first run is not timed
+    //             query_times.push_back(elapsed);
+    //         }
+    //     }
+    // }
 
     if (false) {
         for (auto t: query_times) {
@@ -60,7 +95,7 @@ void perftest(const char* index_filename,
               uint64_t k)
 {
     IndexType index;
-    logger() << "Loading index from " << index_filename << std::endl;
+    logger() << "Loading index" << std::endl;
     boost::iostreams::mapped_file_source m(index_filename);
     succinct::mapper::map(index, m);
 
@@ -78,11 +113,12 @@ void perftest(const char* index_filename,
     wand_data<> wdata;
     boost::iostreams::mapped_file_source md;
     if (wand_data_filename) {
-        logger() << "Loading wand data from " << wand_data_filename << std::endl;
+        logger() << "Loading wand data" << std::endl;
         md.open(wand_data_filename);
         succinct::mapper::map(wdata, md, succinct::mapper::map_flags::warmup);
     }
 
+    logger() << "Index type " << index_type << std::endl;
     logger() << "Performing " << query_type << " queries" << std::endl;
 
     std::function<uint64_t(term_id_vec)> query_fun;
@@ -106,7 +142,7 @@ void perftest(const char* index_filename,
         return;
     }
 
-    op_perftest(query_fun, queries, index_type, query_type, 2);
+    op_perftest(query_fun, queries, index_type, query_type, num_runs);
 }
 
 int main(int argc, const char** argv) {

@@ -51,6 +51,8 @@ namespace pvb {
                 enums.push_back(index[term]);
             }
 
+            // std::cout << "enums.size() " << enums.size() << std::endl;
+
             // sort by increasing frequency
             std::sort(enums.begin(), enums.end(),
                 [](auto const& lhs, auto const& rhs) {
@@ -65,6 +67,7 @@ namespace pvb {
                 for (; i < enums.size(); ++i)
                 {
                     enums[i].next_geq(candidate);
+                    // std::cout << "enums[" << i << "].docid() " << enums[i].docid() << std::endl;
                     if (enums[i].docid() != candidate) {
                         candidate = enums[i].docid();
                         i = 0;
@@ -79,6 +82,8 @@ namespace pvb {
                     i = 1;
                 }
             }
+
+            // std::cout << "results " << results << std::endl;
 
             return results;
         }
