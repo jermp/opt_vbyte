@@ -15,7 +15,6 @@
 #include "util.hpp"
 #include "binary_collection.hpp"
 #include "queues.hpp"
-#include "jobs.hpp"
 
 using namespace pvb;
 
@@ -112,6 +111,7 @@ void encode(char const* collection_name,
             char const* output_filename)
 {
     binary_collection input(collection_name);
+    static const configuration conf(64);
 
     auto it = input.begin();
     uint64_t num_processed_lists = 0;
@@ -134,7 +134,7 @@ void encode(char const* collection_name,
 
     succinct::bit_vector_builder bvb;
     boost::progress_display progress(total_progress);
-    semiasync_queue jobs_queue(num_jobs);
+    semiasync_queue jobs_queue(num_jobs, conf);
 
     for (; it != input.end(); ++it)
     {

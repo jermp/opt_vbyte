@@ -1,13 +1,17 @@
 #pragma once
 
+#include "partitioned_vb_sequence.hpp"
+#include "partitioned_sequence.hpp"
+#include "positive_sequence.hpp"
 #include "block_codecs.hpp"
 
 namespace pvb {
 
     struct opt_vbyte {
+
         typedef partitioned_vb_sequence<maskedvbyte_block> docs_sequence_type;
         typedef positive_sequence<
-                    partitioned_sequence<maskedvbyte_block>
+                    partitioned_vb_sequence<maskedvbyte_block>
                 > freqs_sequence_type;
 
         static void encode(uint32_t const* in,
@@ -16,10 +20,11 @@ namespace pvb {
                            bool freqs)
         {
             static const global_parameters params;
+            static const configuration conf(64);
             if (freqs) {
-                freqs_sequence_type::write(bvb, in, universe, n, params);
+                freqs_sequence_type::write(bvb, in, universe, n, params, conf);
             } else {
-                docs_sequence_type::write(bvb, in, universe, n, params);
+                docs_sequence_type::write(bvb, in, universe, n, params, conf);
             }
         }
 

@@ -19,7 +19,6 @@ using namespace pvb;
 
 void print_statistics(std::string type,
                       char const* encoded_data_filename,
-                      dint_statistics const& stats,
                       std::vector<double> const& timings,
                       uint64_t num_decoded_ints,
                       uint64_t num_decoded_lists
@@ -32,8 +31,6 @@ void print_statistics(std::string type,
     logger() << "elapsed time " << tot_elapsed << " [sec]" << std::endl;
     logger() << ns_x_int << " [ns] x int" << std::endl;
     logger() << ints_x_sec << " ints x [sec]" << std::endl;
-
-    logger() << "avg. # of decoded integers x codeword: " << double(stats.decoded_ints_from_dict) / stats.dict_codewords << std::endl;
 
     // stats to std output
     std::cout << "{";
@@ -110,8 +107,6 @@ int main(int argc, char** argv) {
 
     char const* encoded_data_filename = argv[1];
     bool freqs = false;
-
-    std::string cmd(std::string(argv[0]) + " " + type + " " + std::string(encoded_data_filename));
 
     for (int i = 2; i < argc; ++i) {
         if (argv[i] == std::string("--freqs")) {

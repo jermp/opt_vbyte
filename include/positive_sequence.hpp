@@ -7,7 +7,7 @@
 
 namespace pvb {
 
-    template <typename BaseSequence = strict_sequence>
+    template<typename BaseSequence = strict_sequence>
     struct positive_sequence {
 
         typedef BaseSequence base_sequence_type;
@@ -33,6 +33,13 @@ namespace pvb {
                                       prefixes.begin(),
                                       universe, n,
                                       params, conf);
+        }
+
+        static void decode(succinct::bit_vector const& bv,
+                           uint32_t* out, uint64_t offset,
+                           uint64_t universe, uint64_t n)
+        {
+            BaseSequence::decode(bv, out, offset, universe, n);
         }
 
         class enumerator {

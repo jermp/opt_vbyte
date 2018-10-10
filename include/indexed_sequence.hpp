@@ -150,6 +150,7 @@ namespace pvb {
 
             // semicolons are redundant but they are needed to get emacs to
             // align the lines properly
+            ENUMERATOR_METHOD(void, decode, (uint32_t* out), (out));
             ENUMERATOR_METHOD(value_type, move, (uint64_t position), (position));
             ENUMERATOR_METHOD(value_type, next_geq, (uint64_t lower_bound), (lower_bound));
             ENUMERATOR_METHOD(value_type, next, (), ());
