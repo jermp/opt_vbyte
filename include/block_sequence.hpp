@@ -31,17 +31,17 @@ namespace pvb {
             assert(bvb.size() % alignment == 0);
             (void) params;
 
-            std::vector<posting_type> docids;
+            std::vector<posting_type> gaps;
             posting_type last(-1);
             auto it = begin;
             for (size_t i = 0; i < n; ++i, ++it) {
                 auto doc = *it;
-                docids.push_back(doc - last);
+                gaps.push_back(doc - last);
                 last = doc;
             }
 
             std::vector<uint8_t> out;
-            BlockCodec::encode(docids.data(), universe, n, out);
+            BlockCodec::encode(gaps.data(), universe, n, out);
             for (uint8_t v: out) {
                 bvb.append_bits(v, 8);
             }
@@ -69,6 +69,12 @@ namespace pvb {
                 m_ptr = reinterpret_cast<uint8_t const*>(bv.data().data()) + offset / 8;
                 decode_next_block();
                 m_value = m_buffer[0];
+            }
+
+            // decode whole sequence
+            void decode(uint32_t* out) {
+                m_ptr = BlockCodec::decode(m_ptr, out, m_universe, m_n);
+                out += m_n;
             }
 
             void decode_next_block()

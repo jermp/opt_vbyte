@@ -130,7 +130,7 @@ namespace pvb {
 
         friend class partitioned_sequence_test;
 
-    private:
+    // private:
 
         pv_type DS2I_NOINLINE slow_next()
         {

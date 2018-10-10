@@ -318,16 +318,16 @@ namespace pvb {
                           global_parameters const& params)
         {
             (void) params;
-            std::vector<uint32_t> docids;
-            docids.reserve(n);
+            std::vector<uint32_t> gaps;
+            gaps.reserve(n);
             uint32_t last_doc(-1);
             for (size_t i = 0; i < n; ++i) {
                 uint32_t doc = *(begin + i) - base;
-                docids.push_back(doc - last_doc); // delta gap
+                gaps.push_back(doc - last_doc); // delta gap
                 last_doc = doc;
             }
             std::vector<uint8_t> out;
-            encode(docids.data(), universe, n, out);
+            encode(gaps.data(), universe, n, out);
             for (uint8_t v: out) {
                 bvb.append_bits(v, 8);
             }
@@ -385,5 +385,5 @@ namespace pvb {
             auto read = varintgb_codec.decodeArray(in, n, out);
             return read + in;
         }
-    };
+    }; 
 }

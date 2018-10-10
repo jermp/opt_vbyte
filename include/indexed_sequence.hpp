@@ -159,7 +159,7 @@ namespace pvb {
 #undef ENUMERATOR_METHOD
 #undef ENUMERATOR_VOID_METHOD
 
-        private:
+        // private:
             index_type m_type;
             union {
                 typename Encoder::enumerator m_th_enumerator;

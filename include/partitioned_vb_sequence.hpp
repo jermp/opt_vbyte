@@ -123,6 +123,39 @@ namespace pvb {
             }
         }
 
+        // function that decodes the whole list using SIMD
+        static void decode(succinct::bit_vector const& bv,
+                           uint32_t* out, uint64_t offset,
+                           uint64_t universe, uint64_t n)
+        {
+            static const global_parameters params;
+            enumerator e(bv, offset, universe, n, params);
+            for (uint64_t i = 0; i != num_partitions; ++i) {
+                e.switch_partition(i);
+                e.m_partition_enum.decode(out);
+            }
+
+            // uint64_t num_partitions = e.m_partitions;
+            // int type = e.m_partition_enum.m_type; // first partition type
+            // if (type == third) {
+            //     for (uint64_t i = 0; i < num_partitions - 1; i += 2) {
+            //         // decode vbyte
+            //         // decode bit_vector
+            //     }
+            //     if (num_partitions % 2 == 1) {
+            //         // decode vbyte
+            //     }
+            // } else {
+            //     for (uint64_t i = 0; i < num_partitions - 1; i += 2) {
+            //         // decode bit_vector
+            //         // decode vbyte
+            //     }
+            //     if (num_partitions % 2 == 1) {
+            //         // decode bitvector
+            //     }
+            // }
+        }
+
     private:
 
         static const uint64_t type_bits = indexed_sequence<>::type_bits;

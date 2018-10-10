@@ -31,6 +31,10 @@
 
 namespace pvb {
 
+    namespace constants {
+        const static uint64_t GB = 1000000000;
+    }
+
     typedef std::chrono::high_resolution_clock clock_type;
 
     static const uint64_t alignment = 8;
