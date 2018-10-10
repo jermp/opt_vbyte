@@ -33,7 +33,7 @@ namespace pvb {
 
     namespace constants {
         const static uint64_t GB = 1000000000;
-        const static uint64_t min_size = 0;
+        const static uint64_t min_size = 4096;
         const static uint64_t max_size = 51000000;
     }
 

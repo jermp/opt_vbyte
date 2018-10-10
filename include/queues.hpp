@@ -18,8 +18,8 @@ namespace pvb {
             , m_work_per_thread(work_per_thread)
         {
             m_max_threads = conf.worker_threads;
-            logger() << "semiasync_queue using " << m_max_threads
-                     << " worker threads" << std::endl;
+            // logger() << "semiasync_queue using " << m_max_threads
+            //          << " worker threads" << std::endl;
         }
 
         class job {

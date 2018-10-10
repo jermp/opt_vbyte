@@ -106,7 +106,11 @@ namespace pvb {
                         pad = alignment - mod;
                     }
                     assert((offset + type_bits + pad) % alignment == 0);
+                    // std::cout << "vbyte" << std::endl;
                 }
+                // else {
+                //     std::cout << "binary vect" << std::endl;
+                // }
 
                 // count # of blocks
                 // if (n > 2048)

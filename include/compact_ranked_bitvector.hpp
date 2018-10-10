@@ -35,7 +35,15 @@ namespace pvb {
                 , pointers1_offset(rank1_samples_offset + rank1_samples * rank1_sample_size)
                 , bits_offset(pointers1_offset + pointers1 * pointer_size)
                 , end(bits_offset + universe)
-            {}
+            {
+                // uint64_t mod = bits_offset % 64;
+                // if (mod != 0) {
+                //     uint64_t pad = 64 - mod;
+                //     bits_offset += pad;
+                // }
+                // assert(bits_offset % 64 == 0);
+                // end = bits_offset + universe;
+            }
 
             uint64_t universe;
             uint64_t n;
@@ -171,10 +179,14 @@ namespace pvb {
 
             // decode whole sequence
             void decode(uint32_t* out) {
+                // std::cout << "decoding a binary block of " << m_of.n << " ints" << std::endl;
                 uint64_t const* bitmap = m_bv->data().data();
+                // assert(m_of.bits_offset % 64 == 0);
                 uint64_t begin = m_of.bits_offset / 64;
-                uint64_t size_in_64bit_words = m_of.universe / 64;
-                bitmap_decode_avx2(bitmap + begin, size_in_64bit_words, out);
+                uint64_t size_in_64bit_words = m_of.universe / 64 + 1;
+                int n = bitmap_decode_avx2(bitmap + begin, size_in_64bit_words, out);
+                out += m_of.n;
+                // std::cout << "written " << n << " ints" << std::endl;
             }
 
             value_type move(uint64_t position)
@@ -389,7 +401,6 @@ namespace pvb {
             uint64_t m_value;
             succinct::bit_vector::unary_enumerator m_enumerator;
 
-
             // code adapted from:
             // https://lemire.me/blog/2018/03/08/iterating-over-set-bits-quickly-simd-edition/
             // credits to Daniel Lemire
@@ -428,17 +439,6 @@ namespace pvb {
                 return out - initout;
             }
 
-
-            uint64_t const* m_data;
-            uint64_t m_word;
-            uint64_t m_num_words;
-            uint64_t m_buf;
-            uint64_t m_decoded_elements;
-            uint64_t m_pos_in_buffer;
-            uint32_t m_buffer[64];
-            __m256i m_base = _mm256_set1_epi32(-1);
-            __m256i m_inpt = _mm256_set1_epi32(64);
-            __m256i m_add8 = _mm256_set1_epi32(8);
         };
     };
 }

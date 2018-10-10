@@ -67,12 +67,15 @@ namespace pvb {
                 (void) params;
                 assert(offset % alignment == 0);
                 m_ptr = reinterpret_cast<uint8_t const*>(bv.data().data()) + offset / 8;
-                decode_next_block();
-                m_value = m_buffer[0];
+                
+                // Uncomment this for query processing!
+                // decode_next_block();
+                // m_value = m_buffer[0];
             }
 
-            // decode whole sequence
             void decode(uint32_t* out) {
+                // std::cout << "** decoding a vbyte block of " << m_n << " ints" << std::endl;
+                // std::cout << "m_universe: " << m_universe << "; m_n: " << m_n << std::endl;
                 m_ptr = BlockCodec::decode(m_ptr, out, m_universe, m_n);
                 out += m_n;
             }
@@ -83,6 +86,7 @@ namespace pvb {
                 uint64_t block_size = m_cur_block < m_blocks
                                     ? BlockCodec::block_size
                                     : m_n - (m_blocks - 1) * BlockCodec::block_size;
+                std::cout << "decoding a vbyte block of " << block_size << " ints" << std::endl;
                 m_ptr = BlockCodec::decode(m_ptr, m_buffer, m_universe, block_size);
                 uint32_t last = m_cur_block > 1 ? m_value : uint32_t(-1);
                 m_buffer[0] += last;

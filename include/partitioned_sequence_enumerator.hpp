@@ -75,7 +75,8 @@ namespace pvb {
                 }
                 assert((m_sequences_offset % alignment) == 0);
 
-                slow_move();
+                // uncomment this for query processing!
+                // slow_move();
             }
         }
 

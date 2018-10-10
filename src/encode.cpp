@@ -44,6 +44,14 @@ struct sequence_adder : semiasync_queue::job {
 
     virtual void prepare()
     {
+        if (not docs) {
+            universe = 0;
+            auto in = begin;
+            for (uint64_t i = 0; i != n; ++i, ++in) {
+                universe += *in;
+            }
+            universe += 1;
+        }
         opt_vbyte::encode(begin, universe, n, tmp, not docs);
     }
 
@@ -52,11 +60,13 @@ struct sequence_adder : semiasync_queue::job {
         progress += n + 1;
         ++num_processed_lists;
         num_total_ints += n;
+        push_pad(tmp, alignment);
         uint64_t offset = bvb.size() + tmp.size();
         bvb.append_bits(offset + 64 + 32 + 32, 64);
         bvb.append_bits(universe, 32);
         bvb.append_bits(n, 32);
         bvb.append(tmp);
+        assert(bvb.size() % alignment == 0);
     }
 
     Iterator begin;
@@ -183,7 +193,7 @@ void encode(char const* collection_name,
 
 int main(int argc, char** argv) {
 
-    if (argc < 3) {
+    if (argc < 2) {
         std::cerr << "Usage " << argv[0] << ":\n"
                   << "\t<collection_name> [--out <output_filename>]"
                   << std::endl;

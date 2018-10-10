@@ -128,7 +128,15 @@ namespace pvb {
                            uint64_t universe, uint64_t n)
         {
             global_parameters params;
-            enumerator e(bv, offset, universe, n, params);
+            enumerator e(bv, offset, universe, n, params);            
+            uint64_t num_partitions = e.m_partitions;
+
+            if (num_partitions == 1) {
+                e.m_partition_enum.decode(out);
+                return;
+            }
+
+            // std::cout << "num_partitions " << e.m_partitions << std::endl;
             for (uint64_t i = 0; i != e.m_partitions; ++i) {
                 e.switch_partition(i);
                 e.m_partition_enum.decode(out);

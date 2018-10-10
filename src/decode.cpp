@@ -73,6 +73,8 @@ void decode(char const* encoded_data_filename, bool freqs)
         // std::cout << n << std::endl;
         offset += 32;
 
+        assert(offset % alignment == 0);
+
         auto start = clock_type::now();
         opt_vbyte::decode(
             bv, decoded.data(), offset, universe, n, freqs
@@ -87,6 +89,7 @@ void decode(char const* encoded_data_filename, bool freqs)
         // std::cout << num_decoded_lists << ": offset " << offset << "/" << num_bits << std::endl;
     }
 
+    std::cout << "num_decoded_ints " << num_decoded_ints << std::endl;
     double tot_elapsed = std::accumulate(timings.begin(), timings.end(), double(0.0));
     double ns_x_int = tot_elapsed * 1000000000 / num_decoded_ints;
     uint64_t ints_x_sec = uint64_t(1 / ns_x_int * 1000000000);
@@ -98,7 +101,7 @@ void decode(char const* encoded_data_filename, bool freqs)
 
 int main(int argc, char** argv) {
 
-    if (argc < 3) {
+    if (argc < 2) {
         std::cerr << "Usage " << argv[0] << ":\n"
                   << "\t<encoded_data_filename> [--freqs]"
                   << std::endl;
