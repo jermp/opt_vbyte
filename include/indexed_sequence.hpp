@@ -106,11 +106,7 @@ namespace pvb {
                         pad = alignment - mod;
                     }
                     assert((offset + type_bits + pad) % alignment == 0);
-                    // std::cout << "vbyte" << std::endl;
                 }
-                // else {
-                //     std::cout << "binary vect" << std::endl;
-                // }
 
                 // count # of blocks
                 // if (n > 2048)
@@ -152,9 +148,7 @@ namespace pvb {
             }                                                       \
             /**/
 
-            // semicolons are redundant but they are needed to get emacs to
-            // align the lines properly
-            ENUMERATOR_METHOD(void, decode, (uint32_t* out), (out));
+            // ENUMERATOR_METHOD(void, decode, (uint32_t* out), (out));
             ENUMERATOR_METHOD(value_type, move, (uint64_t position), (position));
             ENUMERATOR_METHOD(value_type, next_geq, (uint64_t lower_bound), (lower_bound));
             ENUMERATOR_METHOD(value_type, next, (), ());
@@ -164,7 +158,6 @@ namespace pvb {
 #undef ENUMERATOR_METHOD
 #undef ENUMERATOR_VOID_METHOD
 
-        // private:
             index_type m_type;
             union {
                 typename Encoder::enumerator m_th_enumerator;

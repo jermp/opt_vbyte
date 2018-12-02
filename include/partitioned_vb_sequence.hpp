@@ -123,45 +123,32 @@ namespace pvb {
             }
         }
 
-        static void decode(succinct::bit_vector const& bv,
-                           uint32_t* out, uint64_t offset,
-                           uint64_t universe, uint64_t n)
-        {
-            global_parameters params;
-            enumerator e(bv, offset, universe, n, params);            
-            uint64_t num_partitions = e.m_partitions;
+        // static void decode(succinct::bit_vector const& bv,
+        //                    uint32_t* out, uint64_t offset,
+        //                    uint64_t universe, uint64_t n)
+        // {
+        //     global_parameters params;
+        //     enumerator e(bv, offset, universe, n, params);
+        //     uint64_t num_partitions = e.m_partitions;
 
-            if (num_partitions == 1) {
-                e.m_partition_enum.decode(out);
-                return;
-            }
+        //     if (num_partitions == 1) {
+        //         e.m_partition_enum.decode(out);
+        //         return;
+        //     }
 
-            // std::cout << "num_partitions " << e.m_partitions << std::endl;
-            for (uint64_t i = 0; i != e.m_partitions; ++i) {
-                e.switch_partition(i);
-                e.m_partition_enum.decode(out);
-            }
+        //     e.switch_partition(0);
+        //     uint64_t i = 0;
 
-            // uint64_t num_partitions = e.m_partitions;
-            // int type = e.m_partition_enum.m_type; // first partition type
-            // if (type == third) {
-            //     for (uint64_t i = 0; i < num_partitions - 1; i += 2) {
-            //         // decode vbyte
-            //         // decode bit_vector
-            //     }
-            //     if (num_partitions % 2 == 1) {
-            //         // decode vbyte
-            //     }
-            // } else {
-            //     for (uint64_t i = 0; i < num_partitions - 1; i += 2) {
-            //         // decode bit_vector
-            //         // decode vbyte
-            //     }
-            //     if (num_partitions % 2 == 1) {
-            //         // decode bitvector
-            //     }
-            // }
-        }
+        //     while (true) {
+        //         e.m_partition_enum.decode(out);
+        //         ++i;
+        //         if (i != num_partitions) {
+        //             e.next_partition();
+        //         } else {
+        //             break;
+        //         }
+        //     }
+        // }
 
     private:
 

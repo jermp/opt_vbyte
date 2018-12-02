@@ -61,16 +61,13 @@ void decode(char const* encoded_data_filename, bool freqs)
     uint64_t universe, n;
 
     logger() << "decoding..." << std::endl;
-    // std::cout << "num_bits " << num_bits << std::endl;
     while (offset < num_bits) {
 
         uint64_t next_offset = bv.get_bits(offset, 64);
         offset += 64;
         universe = bv.get_bits(offset, 32);
-        // std::cout << "universe " << universe << "; n ";
         offset += 32;
         n = bv.get_bits(offset, 32);
-        // std::cout << n << std::endl;
         offset += 32;
 
         assert(offset % alignment == 0);
@@ -85,8 +82,6 @@ void decode(char const* encoded_data_filename, bool freqs)
         num_decoded_ints += n;
         ++num_decoded_lists;
         offset = next_offset;
-
-        // std::cout << num_decoded_lists << ": offset " << offset << "/" << num_bits << std::endl;
     }
 
     std::cout << "num_decoded_ints " << num_decoded_ints << std::endl;
@@ -121,6 +116,6 @@ int main(int argc, char** argv) {
     }
 
     decode(encoded_data_filename, freqs);
-    
+
     return 0;
 }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(DS2I)
+project(OPT_VB)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
@@ -45,9 +45,9 @@ link_directories(${Boost_LIBRARY_DIRS})
 add_subdirectory(external)
 
 # add the root directory to include path to make includes absolute
-include_directories(${DS2I_SOURCE_DIR}/external
+include_directories(${OPT_VB_SOURCE_DIR}/external
 		    ${STXXL_INCLUDE_DIRS}
-		    ${DS2I_SOURCE_DIR}/include
+		    ${OPT_VB_SOURCE_DIR}/include
 		    )
 
 add_subdirectory(src)

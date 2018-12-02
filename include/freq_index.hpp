@@ -5,7 +5,6 @@
 #include "integer_codes.hpp"
 #include "global_parameters.hpp"
 #include "configuration.hpp"
-#include "queues.hpp"
 
 namespace pvb {
 
@@ -58,7 +57,6 @@ namespace pvb {
 
             void build(freq_index& sq)
             {
-                // m_queue.complete();
                 sq.m_num_docs = m_num_docs;
                 sq.m_params = m_params;
                 m_docs_sequences.build(sq.m_docs_sequences);

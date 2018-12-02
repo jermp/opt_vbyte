@@ -1,5 +1,9 @@
 #pragma once
 
+// code adapted from:
+// https://lemire.me/blog/2018/03/08/iterating-over-set-bits-quickly-simd-edition/
+// credits to Daniel Lemire
+
 #if defined(_MSC_VER)
 #define ALIGNED(x) __declspec(align(x))
 #else

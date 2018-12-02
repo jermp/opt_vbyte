@@ -7,8 +7,7 @@
 #include "global_parameters.hpp"
 #include "util.hpp"
 #include "typedefs.hpp"
-
-#include "../src/bitmap_tables.h"
+// #include "bitmap_tables.h"
 
 namespace pvb {
 
@@ -35,15 +34,7 @@ namespace pvb {
                 , pointers1_offset(rank1_samples_offset + rank1_samples * rank1_sample_size)
                 , bits_offset(pointers1_offset + pointers1 * pointer_size)
                 , end(bits_offset + universe)
-            {
-                // uint64_t mod = bits_offset % 64;
-                // if (mod != 0) {
-                //     uint64_t pad = 64 - mod;
-                //     bits_offset += pad;
-                // }
-                // assert(bits_offset % 64 == 0);
-                // end = bits_offset + universe;
-            }
+            {}
 
             uint64_t universe;
             uint64_t n;
@@ -138,9 +129,6 @@ namespace pvb {
             }
 
             set_rank1_samples(last + 1, universe, n);
-
-
-            // push_pad(bvb, alignment);
         }
 
         template<typename Iterator>
@@ -177,17 +165,13 @@ namespace pvb {
                 , m_value(m_of.universe)
             {}
 
-            // decode whole sequence
-            void decode(uint32_t* out) {
-                // std::cout << "decoding a binary block of " << m_of.n << " ints" << std::endl;
-                uint64_t const* bitmap = m_bv->data().data();
-                // assert(m_of.bits_offset % 64 == 0);
-                uint64_t begin = m_of.bits_offset / 64;
-                uint64_t size_in_64bit_words = m_of.universe / 64 + 1;
-                int n = bitmap_decode_avx2(bitmap + begin, size_in_64bit_words, out);
-                out += m_of.n;
-                // std::cout << "written " << n << " ints" << std::endl;
-            }
+            // void decode(uint32_t* out) {
+            //     uint64_t const* bitmap = m_bv->data().data();
+            //     uint64_t begin = m_of.bits_offset / 64;
+            //     uint64_t size_in_64bit_words = m_of.universe / 64 + 1;
+            //     bitmap_decode_avx2(bitmap + begin, size_in_64bit_words, out);
+            //     out += m_of.n;
+            // }
 
             value_type move(uint64_t position)
             {
@@ -404,40 +388,40 @@ namespace pvb {
             // code adapted from:
             // https://lemire.me/blog/2018/03/08/iterating-over-set-bits-quickly-simd-edition/
             // credits to Daniel Lemire
-            int bitmap_decode_avx2(uint64_t const* bitmap, size_t size_in_64bit_words, uint32_t* out) {
-                uint32_t *initout = out;
-                __m256i baseVec = _mm256_set1_epi32(-1);
-                __m256i incVec = _mm256_set1_epi32(64);
-                __m256i add8 = _mm256_set1_epi32(8);
+            // int bitmap_decode_avx2(uint64_t const* bitmap, size_t size_in_64bit_words, uint32_t* out) {
+            //     uint32_t *initout = out;
+            //     __m256i baseVec = _mm256_set1_epi32(-1);
+            //     __m256i incVec = _mm256_set1_epi32(64);
+            //     __m256i add8 = _mm256_set1_epi32(8);
 
-                for (size_t i = 0; i < size_in_64bit_words; ++i) {
-                    uint64_t w = bitmap[i];
-                    if (w == 0) {
-                        baseVec = _mm256_add_epi32(baseVec, incVec);
-                    } else {
-                        for (int k = 0; k < 4; ++k) { // process 2 bytes of data at a time
-                            uint8_t byteA = (uint8_t) w;
-                            uint8_t byteB = (uint8_t)(w >> 8);
-                            w >>= 16;
-                            __m256i vecA = _mm256_load_si256((const __m256i *) vecDecodeTable[byteA]);
-                            __m256i vecB = _mm256_load_si256((const __m256i *) vecDecodeTable[byteB]);
-                            uint8_t advanceA = lengthTable[byteA];
-                            uint8_t advanceB = lengthTable[byteB];
-                            vecA = _mm256_add_epi32(baseVec, vecA);
-                            baseVec = _mm256_add_epi32(baseVec, add8);
-                            vecB = _mm256_add_epi32(baseVec, vecB);
-                            baseVec = _mm256_add_epi32(baseVec, add8);
-                            _mm256_storeu_si256((__m256i *) out, vecA);
-                            out += advanceA;
-                            _mm256_storeu_si256((__m256i *) out, vecB);
-                            out += advanceB;
-                        }
-                    }
-                }
+            //     for (size_t i = 0; i < size_in_64bit_words; ++i) {
+            //         uint64_t w = bitmap[i];
+            //         if (w == 0) {
+            //             baseVec = _mm256_add_epi32(baseVec, incVec);
+            //         } else {
+            //             for (int k = 0; k < 4; ++k) { // process 2 bytes of data at a time
+            //                 uint8_t byteA = (uint8_t) w;
+            //                 uint8_t byteB = (uint8_t)(w >> 8);
+            //                 w >>= 16;
+            //                 __m256i vecA = _mm256_load_si256((const __m256i *) vecDecodeTable[byteA]);
+            //                 __m256i vecB = _mm256_load_si256((const __m256i *) vecDecodeTable[byteB]);
+            //                 uint8_t advanceA = lengthTable[byteA];
+            //                 uint8_t advanceB = lengthTable[byteB];
+            //                 vecA = _mm256_add_epi32(baseVec, vecA);
+            //                 baseVec = _mm256_add_epi32(baseVec, add8);
+            //                 vecB = _mm256_add_epi32(baseVec, vecB);
+            //                 baseVec = _mm256_add_epi32(baseVec, add8);
+            //                 _mm256_storeu_si256((__m256i *) out, vecA);
+            //                 out += advanceA;
+            //                 _mm256_storeu_si256((__m256i *) out, vecB);
+            //                 out += advanceB;
+            //             }
+            //         }
+            //     }
 
-                // return the number of decoded elements
-                return out - initout;
-            }
+            //     // return the number of decoded elements
+            //     return out - initout;
+            // }
 
         };
     };

@@ -12,7 +12,7 @@
 
 using namespace pvb;
 
-static const uint64_t num_runs = 2;
+static const uint64_t num_runs = 3;
 
 template<typename Functor>
 void op_perftest(Functor query_func,
@@ -24,27 +24,7 @@ void op_perftest(Functor query_func,
     std::vector<double> query_times;
 
     for (size_t run = 0; run <= runs; ++run) {
-        // uint64_t query_id = 0;
         for (auto const& query: queries) {
-            // std::cout << "query " << query_id << std::endl;
-            // if (query_id == 11580  or
-            //     query_id == 117163 or
-            //     query_id == 140627 or
-            //     query_id == 157135 or
-            //     query_id == 165053 or
-            //     query_id == 170455 or
-            //     query_id == 196367 or
-            //     query_id == 209553 or
-            //     query_id == 209969 or
-            //     query_id == 214237)
-            // {
-            //     for (auto x: query) {
-            //         std::cout << x << " ";
-            //     }
-            //     std::cout << std::endl;
-            //     ++query_id;
-            //     continue;
-            // }
             auto tick = get_time_usecs();
             uint64_t result = query_func(query);
             do_not_optimize_away(result);
@@ -52,21 +32,20 @@ void op_perftest(Functor query_func,
             if (run != 0) { // first run is not timed
                 query_times.push_back(elapsed);
             }
-            // ++query_id;
         }
     }
 
-    // for (size_t run = 0; run <= runs; ++run) {
-    //     for (auto const& query: queries) {
-    //         auto tick = get_time_usecs();
-    //         uint64_t result = query_func(query);
-    //         do_not_optimize_away(result);
-    //         double elapsed = double(get_time_usecs() - tick);
-    //         if (run != 0) { // first run is not timed
-    //             query_times.push_back(elapsed);
-    //         }
-    //     }
-    // }
+    for (size_t run = 0; run <= runs; ++run) {
+        for (auto const& query: queries) {
+            auto tick = get_time_usecs();
+            uint64_t result = query_func(query);
+            do_not_optimize_away(result);
+            double elapsed = double(get_time_usecs() - tick);
+            if (run != 0) { // first run is not timed
+                query_times.push_back(elapsed);
+            }
+        }
+    }
 
     if (false) {
         for (auto t: query_times) {

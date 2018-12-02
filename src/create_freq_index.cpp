@@ -109,11 +109,11 @@ int main(int argc, char** argv) {
     params.log_partition_size = conf.log_partition_size;
 
     if (false) {
-#define LOOP_BODY(R, DATA, T)                                               \
-    }                                                                       \
-    else if (type == BOOST_PP_STRINGIZE(T)) {                               \
-        create_collection<binary_freq_collection, BOOST_PP_CAT(T, _index)>(           \
-            input, params, conf, output_filename, check, type/*, K, encode_all*/);    \
+#define LOOP_BODY(R, DATA, T)                                                   \
+    }                                                                           \
+    else if (type == BOOST_PP_STRINGIZE(T)) {                                   \
+        create_collection<binary_freq_collection, BOOST_PP_CAT(T, _index)>(     \
+            input, params, conf, output_filename, check, type);                 \
 
         BOOST_PP_SEQ_FOR_EACH(LOOP_BODY, _, DS2I_INDEX_TYPES);
 #undef LOOP_BODY

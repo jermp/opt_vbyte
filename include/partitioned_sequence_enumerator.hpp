@@ -24,12 +24,12 @@ namespace pvb {
             , m_size(n)
             , m_universe(universe)
             , m_position(0)
+            , m_cur_partition(0)
             , m_bv(&bv)
         {
             succinct::bit_vector::enumerator it(bv, offset);
             m_partitions = read_gamma_nonzero(it);
             if (m_partitions == 1) {
-                m_cur_partition = 0;
                 m_cur_begin = 0;
                 m_cur_end = n;
 
@@ -75,8 +75,8 @@ namespace pvb {
                 }
                 assert((m_sequences_offset % alignment) == 0);
 
-                // uncomment this for query processing!
-                // slow_move();
+                // XXX: uncomment this for query processing!
+                slow_move();
             }
         }
 
@@ -93,18 +93,18 @@ namespace pvb {
             return slow_move();
         }
 
-        pv_type DS2I_ALWAYSINLINE access_delta(uint64_t position)
-        {
-            assert(position <= size());
-            m_position = position;
+        // pv_type DS2I_ALWAYSINLINE access_delta(uint64_t position)
+        // {
+        //     assert(position <= size());
+        //     m_position = position;
 
-            if (m_position >= m_cur_begin && m_position < m_cur_end) {
-                uint64_t val = m_cur_base + m_partition_enum.access_delta(m_position - m_cur_begin).second;
-                return pv_type(m_position, val);
-            }
+        //     if (m_position >= m_cur_begin && m_position < m_cur_end) {
+        //         uint64_t val = m_cur_base + m_partition_enum.access_delta(m_position - m_cur_begin).second;
+        //         return pv_type(m_position, val);
+        //     }
 
-            return slow_access_delta();
-        }
+        //     return slow_access_delta();
+        // }
 
         pv_type DS2I_ALWAYSINLINE next_geq(uint64_t lower_bound)
         {
@@ -128,10 +128,6 @@ namespace pvb {
         uint64_t size() const {
             return m_size;
         }
-
-        friend class partitioned_sequence_test;
-
-    // private:
 
         pv_type DS2I_NOINLINE slow_next()
         {
@@ -165,13 +161,13 @@ namespace pvb {
             return pv_type(m_position, val);
         }
 
-        pv_type DS2I_NOINLINE slow_access_delta()
-        {
-            auto size_it = m_sizes.next_geq(m_position + 1);
-            switch_partition(size_it.first);
-            uint64_t val = m_cur_base + m_partition_enum.access_delta(m_position - m_cur_begin).second;
-            return pv_type(m_position, val);
-        }
+        // pv_type DS2I_NOINLINE slow_access_delta()
+        // {
+        //     auto size_it = m_sizes.next_geq(m_position + 1);
+        //     switch_partition(size_it.first);
+        //     uint64_t val = m_cur_base + m_partition_enum.access_delta(m_position - m_cur_begin).second;
+        //     return pv_type(m_position, val);
+        // }
 
         pv_type DS2I_NOINLINE slow_next_geq(uint64_t lower_bound)
         {
@@ -223,6 +219,30 @@ namespace pvb {
                  m_cur_end - m_cur_begin,
                  *m_params);
         }
+
+        // void next_partition()
+        // {
+        //     uint64_t endpoint = m_bv->get_word56(m_endpoints_offset + m_cur_partition * m_endpoint_bits)
+        //              & ((uint64_t(1) << m_endpoint_bits) - 1);
+
+        //     uint64_t partition_begin = m_sequences_offset + endpoint;
+
+        //     auto size_it = m_sizes.next();
+        //     m_cur_end = size_it.second;
+        //     m_cur_begin = m_sizes.prev_value();
+
+        //     auto ub_it = m_upper_bounds.next();
+        //     m_cur_upper_bound = ub_it.second;
+        //     m_cur_base = m_upper_bounds.prev_value() + (m_cur_partition ? 1 : 0);
+
+        //     m_partition_enum = base_sequence_enumerator
+        //         (*m_bv, partition_begin,
+        //          m_cur_upper_bound - m_cur_base + 1,
+        //          m_cur_end - m_cur_begin,
+        //          *m_params);
+
+        //     ++m_cur_partition;
+        // }
 
         global_parameters* m_params;
         uint64_t m_partitions;
