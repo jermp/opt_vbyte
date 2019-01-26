@@ -86,7 +86,7 @@ The command
 
     $ ./queries opt_vb and test.opt_vb.bin ../data/queries
 
-performed the boolean AND queries contained in the data file `queries` over the index serialized to `test.opt_vb.bin`.
+performes the boolean AND queries contained in the data file `queries` over the index serialized to `test.opt_vb.bin`.
 
 * NOTE: See also the Python scripts in the `scripts/` directory to build the indexes and collect query timings.
 
