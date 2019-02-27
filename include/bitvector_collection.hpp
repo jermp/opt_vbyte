@@ -37,11 +37,11 @@ namespace pvb {
                                           m_params);
                 succinct::bit_vector(&bvb).swap(sq.m_endpoints);
             }
-        size_t size() const
-        {
-            return m_bitvectors.size();
-        }
 
+            size_t size() const
+            {
+                return m_bitvectors.size();
+            }
 
         private:
             global_parameters m_params;

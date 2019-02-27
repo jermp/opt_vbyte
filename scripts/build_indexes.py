@@ -6,9 +6,13 @@ path_to_results = sys.argv[3]  # e.g., './results'
 prefix_name = sys.argv[4]      # e.g., 'gov2'
 
 index_types = [
-	"opt_vb_dp", "uniform_vb", "opt_vb",
-    "block_maskedvbyte", "block_streamvbyte",
-    "block_varintgb", "block_varintg8iu"
+	"opt_vb_dp",
+    "uniform_vb",
+    "opt_vb",
+    "block_maskedvbyte",
+    "block_streamvbyte",
+    "block_varintgb",
+    "block_varintg8iu"
 	]
 
 for type in index_types:

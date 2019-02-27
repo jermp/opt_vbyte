@@ -70,7 +70,6 @@ namespace pvb {
                     std::string const& type,
                     uint64_t postings)
     {
-
         uint64_t docs_size = 0, freqs_size = 0;
         get_size_stats(coll, docs_size, freqs_size);
 
