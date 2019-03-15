@@ -8,7 +8,8 @@ prefix_name = sys.argv[4]      # e.g., 'gov2'
 index_types = [
 	"opt_vb_dp",
     "uniform_vb",
-    "opt_vb",
+    "opt_vb"
+    ,
     "block_maskedvbyte",
     "block_streamvbyte",
     "block_varintgb",
