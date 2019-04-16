@@ -1,7 +1,7 @@
 opt_vbyte
 =========
 
-This is the code used for the experiments in the paper [*Variable-Byte Encoding is Now Space-Efficient Too*](http://pages.di.unipi.it/pibiri/papers/VByte18.pdf) [1], by Giulio Ermanno Pibiri and Rossano Venturini.
+This is the code used for the experiments in the paper [*On Optimally Partitioning Variable-Byte Codes*](http://pages.di.unipi.it/pibiri/papers/TKDE19.pdf) [1], by Giulio Ermanno Pibiri and Rossano Venturini.
 
 This guide is meant to provide a brief overview of the library and to illustrate its functionalities through some examples.
 ##### Table of contents
@@ -109,4 +109,4 @@ Authors
 
 Bibliography
 ------------
-* [1] Giulio Ermanno Pibiri and Rossano Venturini, *Variable-Byte Encoding is Now Space-Efficient Too*. CoRR 2018.
+* [1] Giulio Ermanno Pibiri and Rossano Venturini, *On Optimally Partitioning Variable-Byte Codes*. IEEE TKDE 2019.
