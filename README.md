@@ -109,4 +109,4 @@ Authors
 
 Bibliography
 ------------
-* [1] Giulio Ermanno Pibiri and Rossano Venturini, *On Optimally Partitioning Variable-Byte Codes*. IEEE TKDE 2019.
+* [1] Giulio Ermanno Pibiri and Rossano Venturini, *On Optimally Partitioning Variable-Byte Codes*. 2019. IEEE Transactions on Knowledge and Data Engineering (TKDE). 12 pages.
