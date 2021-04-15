@@ -17,18 +17,23 @@ Building the code
 
 The code is tested on Linux Ubuntu with `gcc` 7.3.0. The following dependencies are needed for the build: `CMake` >= 2.8 and `Boost` >= 1.42.0.
 
-The code is largely based on the [`ds2i`](https://github.com/ot/ds2i) project, so it depends on several submodules. If you have cloned the repository without `--recursive`, you will need to perform the following commands before
+The code is largely based on the [`ds2i`](https://github.com/ot/ds2i) project, so it depends on several submodules.
+To clone the repo, do
+
+	git clone --recursive https://github.com/jermp/opt_vbyte.git
+	
+If you have cloned the repository without `--recursive`, you will need to perform the following commands before
 building:
 
-    $ git submodule init
-    $ git submodule update
+    git submodule init
+    git submodule update
 
 To build the code on Unix systems (see file `CMakeLists.txt` for the used compilation flags), it is sufficient to do the following:
 
-    $ mkdir build
-    $ cd build
-    $ cmake .. -DCMAKE_BUILD_TYPE=Release
-    $ make -j[number of jobs]
+    mkdir build
+    cd build
+    cmake .. -DCMAKE_BUILD_TYPE=Release
+    make -j[number of jobs]
 
 Setting `[number of jobs]` is recommended, e.g., `make -j4`.
 
@@ -58,33 +63,33 @@ Building the indexes
 
 The executables `src/create_freq_index` should be used to build the indexes, given an input collection. To know the parameters needed by the executable, just type
 
-    $ ./create_freq_index
+    ./create_freq_index
 
 without any parameters. You will get:
 
-    $ Usage ./create_freq_index:
-    $       <index_type> <collection_basename> [--out <output_filename>] [--F <fix_cost>] [--check]
+    Usage ./create_freq_index:
+          <index_type> <collection_basename> [--out <output_filename>] [--F <fix_cost>] [--check]
 
 Below we show some examples.
 
 ##### Example 1.
 The command
 
-    $ ./create_freq_index opt_vb ../data/test_collection --out test.opt_vb.bin
+    ./create_freq_index opt_vb ../data/test_collection --out test.opt_vb.bin
 
 builds an optimally-partitioned VByte index that is serialized to the binary file `test.opt_vb.bin`.
 
 ##### Example 2.
 The command
 
-    $ ./create_freq_index block_maskedvbyte ../data/test_collection --out test.vb.bin
+    ./create_freq_index block_maskedvbyte ../data/test_collection --out test.vb.bin
 
 builds an un-partitioned VByte index that is serialized to the binary file `test.vb.bin`, using [`Masked-VByte`](https://github.com/lemire/MaskedVByte.git) to perform sequential decoding.
 
 ##### Example 3.
 The command
 
-    $ ./queries opt_vb and test.opt_vb.bin ../data/queries
+    ./queries opt_vb and test.opt_vb.bin ../data/queries
 
 performes the boolean AND queries contained in the data file `queries` over the index serialized to `test.opt_vb.bin`.
 
