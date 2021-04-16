@@ -15,7 +15,21 @@ This guide is meant to provide a brief overview of the library and to illustrate
 Building the code
 -----------------
 
-The code is tested on Linux Ubuntu with `gcc` 7.3.0. The following dependencies are needed for the build: `CMake` >= 2.8 and `Boost` >= 1.42.0.
+The code is tested on Linux Ubuntu with `gcc` 7.3.0.
+
+The following dependencies are needed for the build: `CMake` >= 2.8 and `Boost` >= 1.42.0.
+
+To install `CMake` just follow the instructions given [here](https://cmake.org/install/).
+
+To install boost on your system you can either use
+
+	brew install boost
+
+on MacOS, or
+
+	sudo apt-get install libboost-all-dev
+
+on Linux.
 
 The code is largely based on the [`ds2i`](https://github.com/ot/ds2i) project, so it depends on several submodules.
 To clone the repo, do
