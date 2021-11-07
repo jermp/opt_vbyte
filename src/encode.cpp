@@ -21,17 +21,12 @@ using namespace pvb;
 typedef binary_collection::posting_type const* iterator_type;
 const uint32_t num_jobs = 1 << 24;
 
-template<typename Iterator>
+template <typename Iterator>
 struct sequence_adder : semiasync_queue::job {
-    sequence_adder(
-        Iterator begin,
-        uint64_t n, uint64_t universe,
-        succinct::bit_vector_builder& bvb,
-        boost::progress_display& progress,
-        bool docs,
-        uint64_t& num_processed_lists,
-        uint64_t& num_total_ints
-    )
+    sequence_adder(Iterator begin, uint64_t n, uint64_t universe,
+                   succinct::bit_vector_builder& bvb,
+                   boost::progress_display& progress, bool docs,
+                   uint64_t& num_processed_lists, uint64_t& num_total_ints)
         : begin(begin)
         , n(n)
         , universe(universe)
@@ -39,11 +34,9 @@ struct sequence_adder : semiasync_queue::job {
         , progress(progress)
         , docs(docs)
         , num_processed_lists(num_processed_lists)
-        , num_total_ints(num_total_ints)
-    {}
+        , num_total_ints(num_total_ints) {}
 
-    virtual void prepare()
-    {
+    virtual void prepare() {
         if (not docs) {
             universe = 0;
             auto in = begin;
@@ -55,8 +48,7 @@ struct sequence_adder : semiasync_queue::job {
         opt_vbyte::encode(begin, universe, n, tmp, not docs);
     }
 
-    virtual void commit()
-    {
+    virtual void commit() {
         progress += n + 1;
         ++num_processed_lists;
         num_total_ints += n;
@@ -80,9 +72,7 @@ struct sequence_adder : semiasync_queue::job {
     uint64_t& num_total_ints;
 };
 
-void save_if(char const* output_filename,
-             std::vector<uint8_t> const& output)
-{
+void save_if(char const* output_filename, std::vector<uint8_t> const& output) {
     if (output_filename) {
         logger() << "writing encoded data..." << std::endl;
         std::ofstream output_file(output_filename);
@@ -95,9 +85,7 @@ void save_if(char const* output_filename,
 
 void print_statistics(std::string type, char const* collection_name,
                       std::vector<uint8_t> const& output,
-                      uint64_t num_total_ints,
-                      uint64_t num_processed_lists)
-{
+                      uint64_t num_total_ints, uint64_t num_processed_lists) {
     double GB_space = output.size() * 1.0 / constants::GB;
     double bpi_space = output.size() * sizeof(output[0]) * 8.0 / num_total_ints;
 
@@ -117,9 +105,7 @@ void print_statistics(std::string type, char const* collection_name,
     std::cout << "}" << std::endl;
 }
 
-void encode(char const* collection_name,
-            char const* output_filename)
-{
+void encode(char const* collection_name, char const* output_filename) {
     binary_collection input(collection_name);
     static const configuration conf(64);
 
@@ -146,19 +132,14 @@ void encode(char const* collection_name,
     boost::progress_display progress(total_progress);
     semiasync_queue jobs_queue(num_jobs, conf);
 
-    for (; it != input.end(); ++it)
-    {
+    for (; it != input.end(); ++it) {
         auto const& list = *it;
         uint32_t n = list.size();
         if (n > constants::min_size) {
-            std::shared_ptr<sequence_adder<iterator_type>>
-                ptr(new sequence_adder<iterator_type>(
-                    list.begin(),
-                    n, list.back() + 1, bvb,
-                    progress, docs,
-                    num_processed_lists, num_total_ints
-                )
-            );
+            std::shared_ptr<sequence_adder<iterator_type>> ptr(
+                new sequence_adder<iterator_type>(
+                    list.begin(), n, list.back() + 1, bvb, progress, docs,
+                    num_processed_lists, num_total_ints));
             jobs_queue.add_job(ptr, n);
         }
     }
@@ -192,7 +173,6 @@ void encode(char const* collection_name,
 }
 
 int main(int argc, char** argv) {
-
     if (argc < 2) {
         std::cerr << "Usage " << argv[0] << ":\n"
                   << "\t<collection_name> [--out <output_filename>]"

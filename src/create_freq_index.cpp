@@ -20,17 +20,14 @@ using namespace pvb;
 using pvb::logger;
 
 template <typename Collection>
-void dump_index_specific_stats(Collection const &, std::string const &)
-{}
+void dump_index_specific_stats(Collection const&, std::string const&) {}
 
-template<typename InputCollection, typename CollectionType, typename Scorer = bm25>
+template <typename InputCollection, typename CollectionType,
+          typename Scorer = bm25>
 void create_collection(InputCollection const& input,
                        global_parameters const& params,
-                       configuration const& conf,
-                       const char* output_filename,
-                       bool check,
-                       std::string const& seq_type)
-{
+                       configuration const& conf, const char* output_filename,
+                       bool check, std::string const& seq_type) {
     logger() << "Building index with F = " << conf.fix_cost << std::endl;
     logger() << "Processing " << input.num_docs() << " documents" << std::endl;
     double tick = get_time_usecs();
@@ -40,11 +37,13 @@ void create_collection(InputCollection const& input,
     progress_logger plog;
     uint64_t size = 0;
 
-    for (auto const& plist: input) {
+    for (auto const& plist : input) {
         size = plist.docs.size();
         uint64_t freqs_sum = 0;
-        freqs_sum = std::accumulate(plist.freqs.begin(), plist.freqs.begin() + size, uint64_t(0));
-        builder.add_posting_list(size, plist.docs.begin(), plist.freqs.begin(), freqs_sum, conf);
+        freqs_sum = std::accumulate(plist.freqs.begin(),
+                                    plist.freqs.begin() + size, uint64_t(0));
+        builder.add_posting_list(size, plist.docs.begin(), plist.freqs.begin(),
+                                 freqs_sum, conf);
         plog.done_sequence(size);
     }
 
@@ -54,10 +53,11 @@ void create_collection(InputCollection const& input,
     double elapsed_secs = (get_time_usecs() - tick) / 1000000;
     double user_elapsed_secs = (get_user_time_usecs() - user_tick) / 1000000;
 
-    logger() << seq_type << " collection built in " << elapsed_secs << " seconds" << std::endl;
+    logger() << seq_type << " collection built in " << elapsed_secs
+             << " seconds" << std::endl;
     stats_line()("type", seq_type)("worker_threads", conf.worker_threads)(
-        "construction_time", elapsed_secs)("construction_user_time", user_elapsed_secs)
-    ;
+        "construction_time", elapsed_secs)("construction_user_time",
+                                           user_elapsed_secs);
 
     dump_stats(coll, seq_type, plog.postings);
 
@@ -69,16 +69,17 @@ void create_collection(InputCollection const& input,
         logger() << "done in " << elapsed_secs << " seconds" << std::endl;
 
         if (check) {
-            verify_collection<InputCollection, CollectionType>(input, output_filename);
+            verify_collection<InputCollection, CollectionType>(input,
+                                                               output_filename);
         }
     }
 }
 
 int main(int argc, char** argv) {
-
     if (argc < 3) {
         std::cerr << "Usage " << argv[0] << ":\n"
-                  << "\t<index_type> <collection_basename> [--out <output_filename>] [--F <fix_cost>] [--check]"
+                  << "\t<index_type> <collection_basename> [--out "
+                     "<output_filename>] [--F <fix_cost>] [--check]"
                   << std::endl;
         return 1;
     }
@@ -109,11 +110,11 @@ int main(int argc, char** argv) {
     params.log_partition_size = conf.log_partition_size;
 
     if (false) {
-#define LOOP_BODY(R, DATA, T)                                                   \
-    }                                                                           \
-    else if (type == BOOST_PP_STRINGIZE(T)) {                                   \
-        create_collection<binary_freq_collection, BOOST_PP_CAT(T, _index)>(     \
-            input, params, conf, output_filename, check, type);                 \
+#define LOOP_BODY(R, DATA, T)                                               \
+    }                                                                       \
+    else if (type == BOOST_PP_STRINGIZE(T)) {                               \
+        create_collection<binary_freq_collection, BOOST_PP_CAT(T, _index)>( \
+            input, params, conf, output_filename, check, type);
 
         BOOST_PP_SEQ_FOR_EACH(LOOP_BODY, _, DS2I_INDEX_TYPES);
 #undef LOOP_BODY

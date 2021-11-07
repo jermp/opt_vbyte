@@ -8,13 +8,11 @@
 #include "util.hpp"
 
 int main(int argc, const char** argv) {
-
     using namespace pvb;
 
     if (argc != 3) {
         std::cerr << "Usage " << argv[0] << ":\n\t"
-                  << "<collection_basename> <output_filename>"
-                  << std::endl;
+                  << "<collection_basename> <output_filename>" << std::endl;
         return 1;
     }
 

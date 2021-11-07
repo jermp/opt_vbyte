@@ -206,8 +206,7 @@ struct varintg8iu_block {
         size_t dstlen = out_len;
         out_len = 0;
         while (srclen > 0 && dstlen >= 9) {
-            auto out = varint_codec.encodeBlock(src, srclen, dst, dstlen);
-            out_len += out;
+            out_len += varint_codec.encodeBlock(src, srclen, dst, dstlen);
         }
         assert(srclen == 0);
         out.insert(out.end(), buf.data(), buf.data() + out_len);
@@ -227,8 +226,7 @@ struct varintg8iu_block {
         uint8_t const* src = in;
         uint32_t* dst = out;
         while (out_len <= (n - 8)) {
-            auto out = varint_codec.decodeBlock(src, dst + out_len);
-            out_len += out;
+            out_len += varint_codec.decodeBlock(src, dst + out_len);
         }
 
         // decodeBlock can overshoot, so we decode the last blocks in a
