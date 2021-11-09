@@ -126,8 +126,9 @@ struct freq_index {
     private:
         friend struct freq_index;
 
-        document_enumerator(typename DocsSequence::enumerator docs_enum,
-                            typename FreqsSequence::enumerator freqs_enum)
+        document_enumerator(
+            typename DocsSequence::enumerator const& docs_enum,
+            typename FreqsSequence::enumerator const& freqs_enum)
             : m_docs_enum(docs_enum), m_freqs_enum(freqs_enum) {
             reset();
         }
