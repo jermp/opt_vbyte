@@ -1,3 +1,5 @@
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/jermp/opt_vbyte.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jermp/opt_vbyte/context:cpp)
+
 opt_vbyte
 =========
 
